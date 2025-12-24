@@ -5,10 +5,10 @@ Create a minimal working prototype of **Pixel Forge** that demonstrates the core
 
 ## Phase 1: The Skeleton (Infrastructure)
 *Objective: Get Rust and React talking, and initialize wgpu.*
-- [ ] Initialize Tauri project with React + TypeScript.
-- [ ] Set up basic Rust backend structure (`GraphState` struct).
-- [ ] Initialize `wgpu` instance in Rust.
-- [ ] Create a simple "Hello World" Tauri command (e.g., return a string from Rust to React).
+- [x] Initialize Tauri project with React + TypeScript.
+- [x] Set up basic Rust backend structure (`GraphState` struct).
+- [x] Initialize `wgpu` instance in Rust.
+- [x] Create a simple "Hello World" Tauri command (e.g., return a string from Rust to React).
 
 ## Phase 2: The Graph (Frontend)
 *Objective: Visual node editing.*

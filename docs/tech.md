@@ -11,6 +11,7 @@ The system is built for high performance using **Rust** and **WebGPU** for the r
 | :--- | :--- | :--- |
 | **Frontend** | React | UI Components & Application State |
 | | React Flow | Node Graph Visualization & Interaction |
+| | Tailwind CSS | Utility-first Styling Framework |
 | | TypeScript | Type Safety for Frontend Logic |
 | **Bridge** | Tauri | IPC between Frontend (WebView) and Backend (Rust) |
 | **Backend** | Rust | Application Logic, State Management, High-performance calculations |
