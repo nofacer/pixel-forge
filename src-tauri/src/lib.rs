@@ -1,4 +1,5 @@
 mod graph;
+mod shaders;
 mod state;
 use state::AppState;
 

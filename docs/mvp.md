@@ -36,10 +36,10 @@ Create a minimal working prototype of **Pixel Forge** that demonstrates the core
 
 ## Phase 5: Composition (The "Cool" Part)
 *Objective: Prove we can combine things.*
-- [ ] Create a **Blend Node** (Inputs: Top, Bottom).
-- [ ] Write a simple WebGPU render pass that samples two textures and mixes them.
-- [ ] Connect: `Solid Red` -> `Blend (Top)` + `Solid Blue` -> `Blend (Bottom)` -> `Output`.
-- [ ] Verify the output is purple.
+- [x] Create a **Blend Node** (Inputs: Top, Bottom).
+- [x] Write a simple WebGPU render pass that samples two textures and mixes them.
+- [x] Connect: `Solid Red` -> `Blend (Top)` + `Solid Blue` -> `Blend (Bottom)` -> `Output`.
+- [x] Verify the output is purple.
 
 ## Future / Post-MVP
 -   Auto-tiling / Pattern generation nodes.

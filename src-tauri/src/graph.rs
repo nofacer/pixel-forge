@@ -1,5 +1,4 @@
 use serde::Deserialize;
-use std::collections::HashMap;
 
 #[derive(Deserialize, Debug, Clone)]
 pub struct ColorData {
@@ -13,6 +12,7 @@ pub struct ColorData {
 pub struct NodeData {
     pub label: String,
     pub color: Option<ColorData>,
+    pub factor: Option<f32>,
 }
 
 #[derive(Deserialize, Debug, Clone)]
@@ -27,7 +27,11 @@ pub struct Node {
 pub struct Edge {
     pub id: String,
     pub source: String,
+    #[serde(rename = "sourceHandle")]
+    pub source_handle: Option<String>,
     pub target: String,
+    #[serde(rename = "targetHandle")]
+    pub target_handle: Option<String>,
 }
 
 #[derive(Deserialize, Debug, Clone)]

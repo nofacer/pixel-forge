@@ -8,6 +8,7 @@ import {
 	type Node,
 	Panel,
 	ReactFlow,
+	type ReactFlowInstance,
 	useEdgesState,
 	useNodesState,
 } from '@xyflow/react';
@@ -15,11 +16,13 @@ import '@xyflow/react/dist/style.css';
 import { useCallback, useEffect, useState } from 'react';
 
 import ColorNode from './nodes/ColorNode';
+import MixNode from './nodes/MixNode';
 import OutputNode from './nodes/OutputNode';
 
 const nodeTypes = {
 	colorNode: ColorNode,
 	outputNode: OutputNode,
+	mixNode: MixNode,
 };
 
 const initialNodes: Node[] = [
@@ -49,7 +52,7 @@ function GraphEditor() {
 	);
 
 	// Capture React Flow instance to get up-to-date data
-	const [rfInstance, setRfInstance] = useState<any>(null);
+	const [rfInstance, setRfInstance] = useState<ReactFlowInstance | null>(null);
 
 	// Initialize WebGPU on mount
 	useEffect(() => {
@@ -109,7 +112,53 @@ function GraphEditor() {
 			>
 				<Background />
 				<Controls />
-				<Panel position="top-right">
+				<Panel
+					position="top-right"
+					className="flex flex-col gap-2 p-2 bg-slate-800 rounded shadow-lg"
+				>
+					<div className="flex flex-col gap-2">
+						<button
+							type="button"
+							onClick={() =>
+								setNodes((nds) => [
+									...nds,
+									{
+										id: crypto.randomUUID(),
+										type: 'colorNode',
+										position: {
+											x: 100 + Math.random() * 100,
+											y: 100 + Math.random() * 100,
+										},
+										data: { label: 'Solid Color' },
+									},
+								])
+							}
+							className="bg-blue-600 hover:bg-blue-700 text-white text-xs py-1 px-2 rounded"
+						>
+							+ Color
+						</button>
+						<button
+							type="button"
+							onClick={() =>
+								setNodes((nds) => [
+									...nds,
+									{
+										id: crypto.randomUUID(),
+										type: 'mixNode',
+										position: {
+											x: 250 + Math.random() * 100,
+											y: 100 + Math.random() * 100,
+										},
+										data: { label: 'Mix', factor: 0.5 },
+									},
+								])
+							}
+							className="bg-purple-600 hover:bg-purple-700 text-white text-xs py-1 px-2 rounded"
+						>
+							+ Mix
+						</button>
+					</div>
+					<hr className="border-slate-600 my-1" />
 					<button
 						type="button"
 						onClick={handleSync}
