@@ -12,7 +12,7 @@ import {
 	useNodesState,
 } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import ColorNode from './nodes/ColorNode';
 import OutputNode from './nodes/OutputNode';
@@ -40,13 +40,16 @@ const initialNodes: Node[] = [
 const initialEdges: Edge[] = [];
 
 function GraphEditor() {
-	const [nodes, , onNodesChange] = useNodesState(initialNodes);
+	const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
 	const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
 
 	const onConnect = useCallback(
 		(params: Connection) => setEdges((eds) => addEdge(params, eds)),
 		[setEdges],
 	);
+
+	// Capture React Flow instance to get up-to-date data
+	const [rfInstance, setRfInstance] = useState<any>(null);
 
 	// Initialize WebGPU on mount
 	useEffect(() => {
@@ -56,10 +59,36 @@ function GraphEditor() {
 	}, []);
 
 	const handleSync = async () => {
-		const graph = { nodes, edges };
+		if (!rfInstance) return;
+
+		// Use getNodes() from instance to ensure we have data updated by child nodes
+		const currentNodes = rfInstance.getNodes();
+		const currentEdges = rfInstance.getEdges();
+
+		const graph = { nodes: currentNodes, edges: currentEdges };
 		try {
-			await invoke('sync_graph', { graphJson: JSON.stringify(graph) });
-			console.log('Graph synced!');
+			// invoke now returns Uint8Array (mapped from Vec<u8>)
+			const imageData = await invoke<Uint8Array>('sync_graph', {
+				graphJson: JSON.stringify(graph),
+			});
+
+			console.log('Graph synced! Received image bytes:', imageData.length);
+
+			// Find OutputNode and update its data
+			setNodes((nds) =>
+				nds.map((node) => {
+					if (node.type === 'outputNode') {
+						return {
+							...node,
+							data: {
+								...node.data,
+								imageData: imageData, // Pass raw bytes to node
+							},
+						};
+					}
+					return node;
+				}),
+			);
 		} catch (e) {
 			console.error('Failed to sync graph:', e);
 		}
@@ -76,6 +105,7 @@ function GraphEditor() {
 				nodeTypes={nodeTypes}
 				colorMode="dark"
 				fitView
+				onInit={setRfInstance}
 			>
 				<Background />
 				<Controls />

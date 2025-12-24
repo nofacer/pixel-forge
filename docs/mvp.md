@@ -30,10 +30,9 @@ Create a minimal working prototype of **Pixel Forge** that demonstrates the core
 
 ## Phase 4: The Loop (Preview)
 *Objective: See the result in the app.*
-- [ ] Create a mechanism to send rendered bytes from Rust to Frontend.
-    -   *Approach A*: Convert to Base64 (Slow, but easy for MVP).
-    -   *Approach B*: Raw buffer transfer + Canvas `putImageData`.
-- [ ] Update the "Canvas" node in React to display this image data.
+- [x] Create a mechanism to send rendered bytes from Rust to Frontend.
+    -   Raw buffer transfer + Canvas `putImageData`.
+- [x] Update the "Canvas" node in React to display this image data.
 
 ## Phase 5: Composition (The "Cool" Part)
 *Objective: Prove we can combine things.*

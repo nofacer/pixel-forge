@@ -16,23 +16,14 @@ async fn init_wgpu(state: tauri::State<'_, AppState>) -> Result<String, String> 
 async fn sync_graph(
     state: tauri::State<'_, AppState>,
     graph_json: String,
-) -> Result<String, String> {
+) -> Result<Vec<u8>, String> {
     let graph: graph::Graph = serde_json::from_str(&graph_json).map_err(|e| e.to_string())?;
 
     println!("Received graph with {} nodes", graph.nodes.len());
 
     let result_bytes = state.render(graph).await?;
-    println!("Rendered Result Bytes Length: {}", result_bytes.len());
 
-    // For MVP debug: Print the first pixel's color
-    if result_bytes.len() >= 4 {
-        println!(
-            "Rendered First Pixel: R={} G={} B={} A={}",
-            result_bytes[0], result_bytes[1], result_bytes[2], result_bytes[3]
-        );
-    }
-
-    Ok("Rendered successfully".to_string())
+    Ok(result_bytes)
 }
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
