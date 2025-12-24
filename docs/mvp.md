@@ -12,12 +12,12 @@ Create a minimal working prototype of **Pixel Forge** that demonstrates the core
 
 ## Phase 2: The Graph (Frontend)
 *Objective: Visual node editing.*
-- [ ] Install and configure `React Flow`.
-- [ ] Create two custom node types on frontend:
+- [x] Install and configure `React Flow`.
+- [x] Create two custom node types on frontend:
     -   **Generator**: "Solid Color" (Inputs: Color (RGBA)).
     -   **Output**: "Canvas" (Displays the final result).
-- [ ] Implement state management to track nodes and edges.
-- [ ] Implement `sync_graph` command to send JSON graph data to Rust.
+- [x] Implement state management to track nodes and edges.
+- [x] Implement `sync_graph` command to send JSON graph data to Rust.
 
 ## Phase 3: The Engine (Backend & WebGPU)
 *Objective: Process the graph and render a solid color.*
