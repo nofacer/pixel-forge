@@ -12,7 +12,7 @@ import {
 	useNodesState,
 } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
-import { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
 
 import ColorNode from './nodes/ColorNode';
 import OutputNode from './nodes/OutputNode';
@@ -47,6 +47,13 @@ function GraphEditor() {
 		(params: Connection) => setEdges((eds) => addEdge(params, eds)),
 		[setEdges],
 	);
+
+	// Initialize WebGPU on mount
+	useEffect(() => {
+		invoke('init_wgpu')
+			.then(() => console.log('WebGPU Initialized'))
+			.catch(console.error);
+	}, []);
 
 	const handleSync = async () => {
 		const graph = { nodes, edges };

@@ -1,12 +1,28 @@
-import { Handle, Position } from '@xyflow/react';
-import { useState } from 'react';
+import { Handle, Position, useReactFlow } from '@xyflow/react';
+import { useEffect, useState } from 'react';
 
-function ColorNode({ data: _data }: { data: { label: string } }) {
-	const [color, setColor] = useState({ r: 255, g: 0, b: 0, a: 1 });
+function ColorNode({
+	id,
+	data,
+}: {
+	id: string;
+	data: {
+		label: string;
+		color?: { r: number; g: number; b: number; a: number };
+	};
+}) {
+	const { updateNodeData } = useReactFlow();
+	const [color, setColor] = useState(
+		data.color || { r: 255, g: 0, b: 0, a: 1 },
+	);
+
+	// Sync local state to graph data whenever it changes
+	useEffect(() => {
+		updateNodeData(id, { color });
+	}, [color, id, updateNodeData]);
 
 	const handleChange = (channel: keyof typeof color, value: number) => {
 		setColor((prev) => ({ ...prev, [channel]: value }));
-		// TODO: Propagate change to parent/graph state
 	};
 
 	return (

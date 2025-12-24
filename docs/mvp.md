@@ -21,12 +21,12 @@ Create a minimal working prototype of **Pixel Forge** that demonstrates the core
 
 ## Phase 3: The Engine (Backend & WebGPU)
 *Objective: Process the graph and render a solid color.*
-- [ ] Implement Graph deserialization in Rust.
-- [ ] Create the **Render Context**: A struct holding wgpu device, queue, and texture manager.
-- [ ] Implement `SolidColorNode` logic in Rust:
+- [x] Implement Graph deserialization in Rust.
+- [x] Create the **Render Context**: A struct holding wgpu device, queue, and texture manager.
+- [x] Implement `SolidColorNode` logic in Rust:
     -   Create a 1x1 (or variable size) texture.
     -   Write pixel data to it via wgpu queue (or shader).
-- [ ] Implement data extraction: Read texture back to host memory ( `Vec<u8>`).
+- [x] Implement data extraction: Read texture back to host memory ( `Vec<u8>`).
 
 ## Phase 4: The Loop (Preview)
 *Objective: See the result in the app.*
